@@ -5,6 +5,13 @@
 #include <stack>
 using namespace std;
 
+int OperatorCheck(int c) {
+    if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^')
+        return 1;
+    return -1;
+
+}
+
 string ShuntingYard(const string& stringInfixNotation) {
 
     const string validOperations = "-+/*^";
