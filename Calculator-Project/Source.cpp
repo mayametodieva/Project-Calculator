@@ -12,6 +12,31 @@ int OperatorCheck(int c) {
 
 }
 
+<<<<<<< HEAD
+=======
+double OperationPerformance(int c, double a, double b) {
+    double result = 0;
+    switch (c) {
+    case '+': result = a + b;
+        break;
+    case '-': result = a - b;
+        break;
+    case '*': result = a * b;
+        break;
+    case '/': 
+        if (b != 0) {
+            result = a / b;
+        }
+        else
+            return 3;
+        break;
+    case '^': result = pow(a, b);
+        break;
+    }    
+    return result;
+}
+
+>>>>>>> 6718085f96159331840dc11dbf0494bae2490a5c
 string ShuntingYard(const string& stringInfixNotation) {
 
     const string validOperations = "-+/*^";
