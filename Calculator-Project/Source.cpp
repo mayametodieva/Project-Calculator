@@ -5,6 +5,13 @@
 #include <stack>
 using namespace std;
 
+int OperatorCheck(int c) {
+    if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^')
+        return 1;
+    return -1;
+
+}
+
 string ShuntingYard(const string& stringInfixNotation) {
 
     const string validOperations = "-+/*^";
@@ -60,6 +67,77 @@ string ShuntingYard(const string& stringInfixNotation) {
     }
 
     return valuesStream.str();
+}
+
+double OperationPerformance(int c, double a, double b) {
+    double result = 0;
+    switch (c) {
+    case '+': result = a + b;
+        break;
+    case '-': result = a - b;
+        break;
+    case '*': result = a * b;
+        break;
+    case '/':
+        if (b != 0) {
+            result = a / b;
+        }
+        else
+            return 3;
+        break;
+    case '^': result = pow(a, b);
+        break;
+    }
+
+
+    return result;
+}
+
+void ReversePolishNotation(char* input_str) {
+
+    stack<double> stackOfNumbers;
+
+    int operatorType;
+    double firstNumber = 0, secondNumber = 0;
+    double result = 0;
+    char* splittedStingPart;
+    char* nextToken = NULL;
+
+    splittedStingPart = strtok_s(input_str, " ", &nextToken);
+
+    while (splittedStingPart) {
+        operatorType = splittedStingPart[0];
+        if (OperatorCheck(operatorType) == 1) {
+            if (stackOfNumbers.size() < 2) {
+                cout << "NaN" << endl;
+                return;
+            }
+
+            secondNumber = stackOfNumbers.top();
+            stackOfNumbers.pop();
+            firstNumber = stackOfNumbers.top();
+            stackOfNumbers.pop();
+
+            result = OperationPerformance(operatorType, firstNumber, secondNumber);
+            if (result == 3) {
+                cout << "NaN" << endl;
+                return;
+            }
+            stackOfNumbers.push(result);
+        }
+        else {
+            stackOfNumbers.push(atof(splittedStingPart));
+        }
+
+        splittedStingPart = strtok_s(nullptr, " ", &nextToken);
+    }
+
+    if (stackOfNumbers.size() == 1) {
+        cout << "Calculation result: " << stackOfNumbers.top() << endl;
+        return;
+    }
+
+    cout << "NaN" << endl;
 }
 
 
