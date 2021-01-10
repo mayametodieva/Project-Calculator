@@ -11,32 +11,53 @@ int OperatorCheck(int c) {
     return -1;
 
 }
-
-<<<<<<< HEAD
-=======
-double OperationPerformance(int c, double a, double b) {
-    double result = 0;
-    switch (c) {
-    case '+': result = a + b;
-        break;
-    case '-': result = a - b;
-        break;
-    case '*': result = a * b;
-        break;
-    case '/': 
-        if (b != 0) {
-            result = a / b;
+//not done
+int checkIfElementIsPros(string values) {
+    for (int i = 0; i < values.length(); i++) {
+        if (values[i] != '0' && values[i] != '1' && values[i] != '2' && values[i] != '3' && values[i] != '4' && values[i] != '5' && values[i] != '6'
+            && values[i] != '7' && values[i] != '8' && values[i] != '9' && values[i] != ' ' && OperatorCheck(values[i]) != 1 && values[i] != '(' && values[i] != ')') {
+            return -4;
         }
-        else
-            return 3;
-        break;
-    case '^': result = pow(a, b);
-        break;
-    }    
-    return result;
+    }
+    return 4;
+}
+//not done
+int inputCheck(string input) {
+    int openBrackets = 0;
+    int closedBrackets = 0;
+    for (int i = 0; i < input.length(); i++) {
+        if (input[i] == '(') {
+            openBrackets++;
+
+        }
+        if (input[i] == ')') {
+            closedBrackets++;
+        }
+        if (openBrackets != closedBrackets) {
+            return -5;
+        }
+    }
+    return 5;
 }
 
->>>>>>> 6718085f96159331840dc11dbf0494bae2490a5c
+string operationValue(char op1, char op2) {
+    string result;
+    if (op1 == '+' && op2 == '+') {
+        result = '+';
+    }
+    if (op1 == '+' && op2 == '-') {
+        result = '-';
+    }
+    if (op1 == '-' && op2 == '-') {
+        result = '+';
+    }
+    if (op1 == '-' && op2 == '+') {
+        result = '-';
+    }
+
+}
+
+
 string ShuntingYard(const string& stringInfixNotation) {
 
     const string validOperations = "-+/*^";
@@ -70,6 +91,17 @@ string ShuntingYard(const string& stringInfixNotation) {
         }
 
         else if (firstToken == '(') {
+            /*for (int i = 0; i < partOfNotation.size(); i++) {
+                if (partOfNotation[i] == '(') {
+                    int n = i + 1;
+                    while (partOfNotation[n] != ' ') {
+                        n++;
+                    }
+                    if (partOfNotation[n] == '-') {
+                        value.top();
+                    }
+                }
+            }*/
 
             value.push(-2);
         }
@@ -117,7 +149,7 @@ double OperationPerformance(int c, double a, double b) {
 
     return result;
 }
-
+//not done
 void ReversePolishNotation(char* input_str) {
 
     stack<double> stackOfNumbers;
@@ -167,6 +199,7 @@ void ReversePolishNotation(char* input_str) {
 
 
 int main() {
+
     ifstream myFile;
     myFile.open("Test1.txt");
     string input;
@@ -180,7 +213,43 @@ int main() {
         getline(myFile, input);
         myFile.close();
     }
-    cout << "Postfix: " << ShuntingYard(input) << endl;
+    if (checkIfElementIsPros(input) == -4) {
+        cout << "NaN" << endl;
+    }
+    else {
+        /* if (inputCheck(input) == 5) {
+             cout << "NaN" << endl;
+         }*/
+         /*else {*/
+        cout << "Infix: " << input << endl;
+        cout << "Postfix: " << ShuntingYard(input) << endl;
+        //not done
+        string myNewString = ShuntingYard(input);
+        int length = myNewString.length();
+        char* myString = (char*)malloc(sizeof(char) * (myNewString.length() + 1));
 
-	return 0;
+        for (int i = 0; i < length; i++)
+        {
+            myString[i] = myNewString[i];
+        }
+
+        myString[length] = '\0';
+
+        ReversePolishNotation(myString);
+
+        free(myString);
+
+        return 0;
+        /*}*/
+    }
+
+
+    /*}*/
+
+
+
+
+
+
+
 }
